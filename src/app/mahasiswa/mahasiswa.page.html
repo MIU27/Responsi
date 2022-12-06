@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+  <ion-buttons slot="start">
+  <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>Data Mahasiswa</ion-title>
+  </ion-toolbar>
+ </ion-header>
+ <ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+  <ion-toolbar>
+  <ion-title size="large">
+  Data Mahasiswa
+  </ion-title>
+  </ion-toolbar>
+  </ion-header>
+  <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Tarik Untuk Memuat Data"
+  refreshingSpinner="circles" refreshingText="Memuat Ulang Data...">
+  </ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-card>
+  <ion-button color="success" expand="block" [routerLink]="['/mahasiswa-tambah']">Tambah Mahasiswa</ion-button>
+  </ion-card>
+  
+  <ion-card *ngFor="let item of lists">
+  <ion-item>
+  <ion-label>
+  {{item.id_mhs}}
+  <p>{{item.nama}}</p>
+  <p>{{item.nim}}</p>
+  <p>{{item.jurusan}}</p>
+  </ion-label>
+  <ion-button color="primary" slot="end" [routerLink]="['/mahasiswa-edit/',item.id_mhs]"
+  routerLinkActive="router-link-active">Edit</ion-button>
+  <ion-button color="danger" slot="end" (click)="deleteMahasiswa(item.id_mhs)">Hapus</ion-button>
+  </ion-item>
+</ion-card>
+<ion-infinite-scroll (ionInfinite)="loadMore($event)">
+<ion-infinite-scroll-content loadingSpinner="circles" loadingText="Sedang Memuat Data...">
+</ion-infinite-scroll-content>
+</ion-infinite-scroll>
+</ion-content>
